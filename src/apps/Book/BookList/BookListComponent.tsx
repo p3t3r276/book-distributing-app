@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
-import {View, Text} from 'react-native';
+import {View, FlatList} from 'react-native';
+import {ListItem} from 'react-native-elements';
 import firestore from '@react-native-firebase/firestore';
-import {TouchableOpacity} from 'react-native-gesture-handler';
 
 export const BookListComponent = () => {
   const [bookList, setBookList] = useState<Book[]>([]);
@@ -13,14 +13,17 @@ export const BookListComponent = () => {
     fetchBook();
   }, [bookList]);
 
+  const keyExtractor = (item: any) => item.id;
+  const renderItem = ({item}) => (
+    <ListItem key={item.id} title={item.name} bottomDivider />
+  );
+
   return (
-    <View>
-      <Text>Book List</Text>
-      <TouchableOpacity onPress={() => getBooks()}>
-        <Text>haha</Text>
-      </TouchableOpacity>
-      {bookList.length !== 0 ? <Text>{JSON.stringify(bookList)}</Text> : null}
-    </View>
+    <FlatList
+      keyExtractor={keyExtractor}
+      data={bookList}
+      renderItem={renderItem}
+    />
   );
 };
 

@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {View, FlatList} from 'react-native';
+import {FlatList, TouchableWithoutFeedback} from 'react-native';
 import {ListItem} from 'react-native-elements';
 import firestore from '@react-native-firebase/firestore';
 
@@ -14,8 +14,10 @@ export const BookListComponent = () => {
   }, [bookList]);
 
   const keyExtractor = (item: any) => item.id;
-  const renderItem = ({item}) => (
-    <ListItem key={item.id} title={item.name} bottomDivider />
+  const renderItem = ({item}: {item: Book}) => (
+    <TouchableWithoutFeedback onPress={() => console.log(item.name)}>
+      <ListItem key={item.id} title={item.name} bottomDivider chevron />
+    </TouchableWithoutFeedback>
   );
 
   return (

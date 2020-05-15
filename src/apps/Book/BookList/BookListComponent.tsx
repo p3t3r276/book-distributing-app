@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {FlatList, TouchableWithoutFeedback} from 'react-native';
 import {ListItem} from 'react-native-elements';
-import firestore from '@react-native-firebase/firestore';
 import {useNavigation} from '@react-navigation/native';
 
 import {Book} from '../../../../types/Book';
@@ -32,17 +31,4 @@ export const BookListComponent = () => {
       renderItem={renderItem}
     />
   );
-};
-
-const getBooks = async (): Promise<Book[]> => {
-  const bookList: Book[] = [];
-  const snapshot = await firestore().collection('books').get();
-
-  snapshot.docs.forEach((doc) => {
-    const newBook = Object.assign({id: doc.id}, doc.data(), {
-      createdAt: doc.data().createdAt.toDate(),
-    });
-    bookList.push(newBook as Book);
-  });
-  return bookList;
 };

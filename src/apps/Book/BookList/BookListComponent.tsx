@@ -3,6 +3,8 @@ import {FlatList, TouchableWithoutFeedback} from 'react-native';
 import {ListItem} from 'react-native-elements';
 import firestore from '@react-native-firebase/firestore';
 
+import {Book} from '../../../../types/Book';
+
 export const BookListComponent = () => {
   const [bookList, setBookList] = useState<Book[]>([]);
 
@@ -40,13 +42,4 @@ const getBooks = async (): Promise<Book[]> => {
     bookList.push(newBook as Book);
   });
   return bookList;
-};
-
-type Book = {
-  id: string;
-  name: string;
-  author: string;
-  price: string;
-  image: string;
-  createdAt: Date;
 };

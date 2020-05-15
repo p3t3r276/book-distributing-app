@@ -7,7 +7,13 @@ import {BookList} from '../apps/Book/BookList';
 import {BookDetails} from '../apps/Book/BookDetails';
 import {Login} from '../apps/Login';
 
-const Stack = createStackNavigator();
+type RootStackParamList = {
+  Login: undefined;
+  BookList: undefined;
+  BookDetails: {id: string};
+};
+
+const Stack = createStackNavigator<RootStackParamList>();
 
 export const Routes = () => (
   <NavigationContainer>

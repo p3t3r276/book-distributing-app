@@ -1,5 +1,9 @@
 import React, {useEffect, useState} from 'react';
-import {FlatList, TouchableWithoutFeedback, ActivityIndicator} from 'react-native';
+import {
+  FlatList,
+  TouchableWithoutFeedback,
+  ActivityIndicator,
+} from 'react-native';
 import {ListItem} from 'react-native-elements';
 import {useNavigation} from '@react-navigation/native';
 import {useSelector, useDispatch} from 'react-redux';
@@ -13,7 +17,7 @@ export const BookListComponent = () => {
 
   // State to Prop
   const bookListProp = useSelector((state: AppState) => state.bookList.books);
-  const loading = useSelector((state: AppState) => state.bookList.loading)
+  const loading = useSelector((state: AppState) => state.bookList.loading);
 
   const dispatch = useDispatch();
   const navigation = useNavigation();
@@ -35,7 +39,7 @@ export const BookListComponent = () => {
   );
 
   if (loading) {
-    return <ActivityIndicator />
+    return <ActivityIndicator />;
   }
 
   return (

@@ -14,7 +14,7 @@ export const BookDetailsContainer = ({route}: Props) => {
   return (
     <View>
       <Text>{route.params.id}</Text>
-      <BookDetailsComponent />
+      <BookDetailsComponent id={route.params.id} />
     </View>
   );
 };

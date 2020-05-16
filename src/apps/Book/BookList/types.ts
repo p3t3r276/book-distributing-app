@@ -18,7 +18,7 @@ export interface getBooksError {
   payload: string;
 }
 
-export type BookListAction = getBooks | getBooksSuccss | getBooksError;
+export type BookListActionType = getBooks | getBooksSuccss | getBooksError;
 
 export type BookListStateType = {
   books: Book[];

@@ -1,5 +1,5 @@
 import {
-  BookListAction,
+  BookListActionType,
   BookListStateType,
   GET_BOOKS,
   GET_BOOKS_SUCCESS,
@@ -14,7 +14,7 @@ const bookListInitialState: BookListStateType = {
 
 export const bookListReducer = (
   state = bookListInitialState,
-  action: BookListAction,
+  action: BookListActionType,
 ): BookListStateType => {
   switch (action.type) {
     case GET_BOOKS:

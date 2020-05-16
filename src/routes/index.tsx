@@ -7,7 +7,7 @@ import {BookList} from '../apps/Book/BookList';
 import {BookDetails} from '../apps/Book/BookDetails';
 import {Login} from '../apps/Login';
 
-type RootStackParamList = {
+export type RootStackParamList = {
   Login: undefined;
   BookList: undefined;
   BookDetails: {id: string};

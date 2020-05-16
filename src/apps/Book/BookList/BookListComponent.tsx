@@ -25,7 +25,7 @@ export const BookListComponent = () => {
   const keyExtractor = (item: any) => item.id;
   const renderItem = ({item}: {item: Book}) => (
     <TouchableWithoutFeedback
-      onPress={() => navigation.navigate('BookDetails')}>
+      onPress={() => navigation.navigate('BookDetails', {id: item.id})}>
       <ListItem key={item.id} title={item.name} bottomDivider chevron />
     </TouchableWithoutFeedback>
   );

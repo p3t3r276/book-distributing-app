@@ -1,9 +1,9 @@
 import {
   BookListAction,
   BookListStateType,
-  GET_BOOK,
-  GET_BOOK_SUCCESS,
-  GET_BOOK_ERROR,
+  GET_BOOKS,
+  GET_BOOKS_SUCCESS,
+  GET_BOOKS_ERROR,
 } from './types';
 
 const bookListInitialState: BookListStateType = {
@@ -17,11 +17,11 @@ export const bookListReducer = (
   action: BookListAction,
 ): BookListStateType => {
   switch (action.type) {
-    case GET_BOOK:
+    case GET_BOOKS:
       return {...state, loading: true};
-    case GET_BOOK_SUCCESS:
+    case GET_BOOKS_SUCCESS:
       return {...state, loading: false, books: action.payload};
-    case GET_BOOK_ERROR:
+    case GET_BOOKS_ERROR:
       return {...state, loading: false, bookListErrorMessage: action.payload};
     default:
       return state;

@@ -4,23 +4,23 @@ import {Dispatch} from 'redux';
 import {Book} from '../../../../types/Book';
 import {
   BookListAction,
-  GET_BOOK,
-  GET_BOOK_SUCCESS,
-  GET_BOOK_ERROR,
+  GET_BOOKS,
+  GET_BOOKS_SUCCESS,
+  GET_BOOKS_ERROR,
 } from './types';
 import {AppAction} from 'types/AppAction';
 
 export const getBooks = (): BookListAction => ({
-  type: GET_BOOK,
+  type: GET_BOOKS,
 });
 
 export const getBookSuccess = (books: Book[]): BookListAction => ({
-  type: GET_BOOK_SUCCESS,
+  type: GET_BOOKS_SUCCESS,
   payload: books,
 });
 
 export const getBooksError = (message: string): BookListAction => ({
-  type: GET_BOOK_ERROR,
+  type: GET_BOOKS_ERROR,
   payload: message,
 });
 

@@ -1,20 +1,20 @@
 import {Book} from '../../../../types/Book';
 
-export const GET_BOOK = 'BOOK/BookList/GET_BOOK';
-export const GET_BOOK_SUCCESS = 'BOOK/BookList/GET_BOOK_SUCCESS';
-export const GET_BOOK_ERROR = 'BOOK/BookList/GET_BOOK_ERROR';
+export const GET_BOOKS = 'BOOK/BookList/GET_BOOKS';
+export const GET_BOOKS_SUCCESS = 'BOOK/BookList/GET_BOOK_SUCCESS';
+export const GET_BOOKS_ERROR = 'BOOK/BookList/GET_BOOK_ERROR';
 
 export interface getBooks {
-  type: typeof GET_BOOK;
+  type: typeof GET_BOOKS;
 }
 
 export interface getBooksSuccss {
-  type: typeof GET_BOOK_SUCCESS;
+  type: typeof GET_BOOKS_SUCCESS;
   payload: Book[];
 }
 
 export interface getBooksError {
-  type: typeof GET_BOOK_ERROR;
+  type: typeof GET_BOOKS_ERROR;
   payload: string;
 }
 

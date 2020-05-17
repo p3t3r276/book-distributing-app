@@ -1,2 +1,3 @@
-export {BookDetailsContainer as BookDetails} from './BookDetailsContainer';
+export {BookDetailsComponent} from './BookDetailsComponent';
 export type {BookDetailsActionType} from './types';
+export {bookDetailsReducer} from './reducer';

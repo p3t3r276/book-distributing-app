@@ -3,7 +3,7 @@ import {View} from 'react-native';
 import {Text} from 'react-native-elements';
 import styled from 'styled-components';
 
-import {BookListComponent} from '../apps/Book/BookList/BookListComponent';
+import {BookListComponent} from '../apps/Book/BookList';
 import {AppLayout} from '../common/AppLayout';
 
 export const BookList = () => (

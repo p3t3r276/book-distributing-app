@@ -1,3 +1,3 @@
-export {BookListContainer as BookList} from './BookListContainer';
-export type {BookListActionType as BookListAction} from './types';
+export {BookListComponent} from './BookListComponent';
+export type {BookListActionType} from './types';
 export {bookListReducer} from './reducer';

@@ -6,7 +6,7 @@ import {composeWithDevTools} from 'redux-devtools-extension/developmentOnly';
 
 // Reducers
 import {bookListReducer} from '../../apps/Book/BookList';
-import {bookDetailsReducer} from '../../apps/Book/BookDetails/reducer';
+import {bookDetailsReducer} from '../../apps/Book/BookDetails';
 
 export const rootReducer = combineReducers({
   bookList: bookListReducer,

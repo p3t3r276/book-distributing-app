@@ -1,1 +1,1 @@
-export {AddBookContainer as AddBook} from './AddBookContainer';
+export {AddBookComponent} from './AddBookComponent';

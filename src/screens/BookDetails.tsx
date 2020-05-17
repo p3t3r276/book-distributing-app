@@ -3,7 +3,7 @@ import {View, Text} from 'react-native';
 import {RouteProp} from '@react-navigation/native';
 
 import {RootStackParamList} from '../routes';
-import {BookDetailsComponent} from '../apps/Book/BookDetails/BookDetailsComponent';
+import {BookDetailsComponent} from '../apps/Book/BookDetails';
 
 type BookDetailsRouteProp = RouteProp<RootStackParamList, 'BookDetails'>;
 type Props = {

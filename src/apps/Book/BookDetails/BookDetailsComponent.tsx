@@ -32,6 +32,7 @@ export const BookDetailsComponent = ({id}: Props) => {
   return (
     <View>
       <Text>{book.name}</Text>
+      <Text>Số lượng: {book.quantity}</Text>
       <Text>{book.author}</Text>
     </View>
   );

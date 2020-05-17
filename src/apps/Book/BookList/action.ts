@@ -34,10 +34,29 @@ export const startGetBooks = () => {
       snapshot.docs.forEach((doc) => {
         const newBook = Object.assign({id: doc.id}, doc.data(), {
           createdAt: doc.data().createdAt.toDate(),
+          quantity: 0,
         });
         bookList.push(newBook as Book);
-        return dispath(getBookSuccess(bookList));
       });
+
+      // get quantities
+      const bookQuantitysnapshot = await firestore()
+        .doc('bookQuantities/1-2020')
+        .get();
+
+      const bookQuantitydata = bookQuantitysnapshot.data();
+
+      if (bookQuantitydata) {
+        bookList.forEach((book) => {
+          book.quantity = bookQuantitydata[book.id]
+            ? bookQuantitydata[book.id]
+            : 0;
+        });
+      }
+
+      console.log(bookList);
+
+      return dispath(getBookSuccess(bookList));
     } catch (err) {
       console.log(err);
       return dispath(getBooksError('Error when loading books'));

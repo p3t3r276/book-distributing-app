@@ -1,14 +1,14 @@
 import firestore from '@react-native-firebase/firestore';
 import {Dispatch} from 'redux';
 
-import {Book} from '../../../../types/Book';
 import {
   BookListActionType,
   GET_BOOKS,
   GET_BOOKS_SUCCESS,
   GET_BOOKS_ERROR,
 } from './types';
-import {AppAction} from 'types/AppAction';
+import {Book} from '../../../../types/Book';
+import {AppAction} from '../../../../types/AppAction';
 
 export const getBooks = (): BookListActionType => ({
   type: GET_BOOKS,

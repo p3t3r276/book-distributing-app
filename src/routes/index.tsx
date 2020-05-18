@@ -20,7 +20,7 @@ export const Routes = () => (
   <NavigationContainer>
     <Stack.Navigator
       screenOptions={{headerShown: false}}
-      initialRouteName="AddBook">
+      initialRouteName="BookList">
       <Stack.Screen name="BookList" component={BookList} />
       <Stack.Screen name="BookDetails" component={BookDetails} />
       <Stack.Screen name="AddBook" component={AddBook} />

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {
   FlatList,
   TouchableWithoutFeedback,
@@ -6,27 +6,47 @@ import {
 } from 'react-native';
 import {ListItem} from 'react-native-elements';
 import {useNavigation} from '@react-navigation/native';
-import {useSelector, useDispatch} from 'react-redux';
+import {Dispatch, bindActionCreators} from 'redux';
+import {
+  connect,
+  ConnectedProps,
+  Connect,
+  useSelector,
+  useDispatch,
+} from 'react-redux';
 
 import {Book} from '../../../../types/Book';
 import {AppState} from '../../../../types/AppState';
 import {startGetBooks} from './action';
+import {AppAction} from '../../../../types/AppAction';
+
+const mapStateToProps = (state: AppState) => ({
+  bookListProp: state.bookList.books,
+  loading: state.bookList.loading,
+});
+
+const mapDispatchToProps = (dispatch: Dispatch<AppAction>) =>
+  bindActionCreators(
+    {
+      startGetBooks,
+    },
+    dispatch,
+  );
+
+const connector = connect(mapStateToProps, mapDispatchToProps);
+
+type PropsRedux = ConnectedProps<typeof connector>;
 
 export const BookListComponent = () => {
-  const [bookList, setBookList] = useState<Book[]>([]);
-
-  // State to Prop
   const bookListProp = useSelector((state: AppState) => state.bookList.books);
   const loading = useSelector((state: AppState) => state.bookList.loading);
-
-  const dispatch = useDispatch();
   const navigation = useNavigation();
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    const fetchBooks = () => {
+    function fetchBooks() {
       dispatch(startGetBooks());
-      setBookList(bookListProp);
-    };
+    }
     fetchBooks();
   }, []);
 
@@ -45,7 +65,7 @@ export const BookListComponent = () => {
   return (
     <FlatList
       keyExtractor={keyExtractor}
-      data={bookList}
+      data={bookListProp}
       renderItem={renderItem}
     />
   );

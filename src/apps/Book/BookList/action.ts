@@ -29,7 +29,10 @@ export const startGetBooks = () => {
     dispath(getBooks());
     try {
       const bookList: Book[] = [];
-      const snapshot = await firestore().collection('books').get();
+      const snapshot = await firestore()
+        .collection('books')
+        .orderBy('createdAt')
+        .get();
 
       snapshot.docs.forEach((doc) => {
         const newBook = Object.assign({id: doc.id}, doc.data(), {

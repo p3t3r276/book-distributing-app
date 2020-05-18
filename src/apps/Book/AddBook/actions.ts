@@ -29,7 +29,7 @@ export const saveBookFailed = (message: string): AddBookActionType => ({
 });
 
 export const startAddBook = ({name, author, price}: BookEntry) => {
-  return async (dispatch: Dispatch<AppAction>, getState: () => AppState) => {
+  return async (dispatch: Dispatch<AppAction>) => {
     dispatch(saveBook());
     try {
       // save book to db
@@ -50,10 +50,6 @@ export const startAddBook = ({name, author, price}: BookEntry) => {
         .update({
           [createdObjRef.id]: 0,
         });
-
-      // add books to local collections
-      // fetch real data
-      dispatch(getBooks());
     } catch (err) {
       return dispatch(saveBookFailed('xảy ra lỗi khi lưu sạch'));
     }

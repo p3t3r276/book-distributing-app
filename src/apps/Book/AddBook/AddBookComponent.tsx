@@ -2,13 +2,16 @@ import React from 'react';
 import {View, Button} from 'react-native';
 import {Text} from 'react-native-elements';
 import {Formik, Field} from 'formik';
-import {useSelector, useDispatch} from 'react-redux';
+import {useDispatch} from 'react-redux';
+import {useNavigation} from '@react-navigation/native';
 
 import {InputField} from '../../../common/InputField';
 import {startAddBook} from './actions';
 
 export const AddBookComponent = () => {
   const dispatch = useDispatch();
+  const navigation = useNavigation();
+
   return (
     <Formik
       validateOnBlur={false}
@@ -29,9 +32,12 @@ export const AddBookComponent = () => {
         );
         setSubmitting(false);
         resetForm();
+        setTimeout(() => {}, 500);
+        navigation.navigate('BookList');
       }}>
       {({handleChange, handleSubmit, values, isSubmitting}) => (
         <View>
+          {isSubmitting ? <Text>Đang xử lý</Text> : null}
           <Text>Tên sách:</Text>
           <Field
             name="name"
@@ -56,7 +62,6 @@ export const AddBookComponent = () => {
             component={InputField}
             value={values.price}
           />
-          {isSubmitting ? <Text>Đang xử lý</Text> : null}
           <Button
             title="Submit"
             disabled={isSubmitting}

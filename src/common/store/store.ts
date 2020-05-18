@@ -7,10 +7,12 @@ import {composeWithDevTools} from 'redux-devtools-extension/developmentOnly';
 // Reducers
 import {bookListReducer} from '../../apps/Book/BookList';
 import {bookDetailsReducer} from '../../apps/Book/BookDetails';
+import {addBookReducer} from '../../apps/Book/AddBook';
 
 export const rootReducer = combineReducers({
   bookList: bookListReducer,
   bookDetails: bookDetailsReducer,
+  addBook: addBookReducer,
 });
 
 const persistConfig = {

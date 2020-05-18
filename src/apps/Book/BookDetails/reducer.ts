@@ -6,14 +6,14 @@ import {
   GET_BOOK_FAIL,
 } from './types';
 
-const BookDetailsInitialState: BookDetailsStateType = {
+const bookDetailsInitialState: BookDetailsStateType = {
   book: undefined,
   loading: false,
   errorMessage: '',
 };
 
 export const bookDetailsReducer = (
-  state = BookDetailsInitialState,
+  state = bookDetailsInitialState,
   action: BookDetailsActionType,
 ): BookDetailsStateType => {
   switch (action.type) {

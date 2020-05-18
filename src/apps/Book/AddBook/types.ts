@@ -1,27 +1,23 @@
-import {Book} from '../../../../types/Book';
-
 export const ADD_BOOK = '@BOOK/ADD_BOOK';
 export const ADD_BOOK_SUCCESS = '@BOOK/ADD_BOOK_SUCCESS';
-export const ADD_BOOK_FAIL = '@BOOK/ADD_BOOK_SUCCESS';
+export const ADD_BOOK_FAIL = '@BOOK/ADD_BOOK_FAIL';
 
-export type startAddBook = {
+export interface AddBook {
   type: typeof ADD_BOOK;
-};
+}
 
-export type addBookSuccess = {
+export interface AddBookSuccess {
   type: typeof ADD_BOOK_SUCCESS;
-  payload: Book;
-};
+}
 
-export type addBookFail = {
+export interface AddBookFail {
   type: typeof ADD_BOOK_FAIL;
   payload: string;
-};
+}
 
-export type AddBookActionType = startAddBook | addBookSuccess | addBookFail;
+export type AddBookActionType = AddBook | AddBookSuccess | AddBookFail;
 
 export type AddBookStateType = {
-  book: Book | undefined;
   loading: boolean;
   errorMessage: string;
 };

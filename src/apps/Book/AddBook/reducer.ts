@@ -7,7 +7,6 @@ import {
 } from './types';
 
 const addBookInitialState: AddBookStateType = {
-  book: undefined,
   loading: false,
   errorMessage: '',
 };
@@ -20,7 +19,7 @@ export const addBookReducer = (
     case ADD_BOOK:
       return {...state, loading: true};
     case ADD_BOOK_SUCCESS:
-      return {...state, loading: false, book: action.payload};
+      return {...state, loading: false};
     case ADD_BOOK_FAIL:
       return {...state, loading: false, errorMessage: action.payload};
     default:

@@ -8,19 +8,15 @@ import {
   ADD_BOOK_SUCCESS,
   ADD_BOOK_FAIL,
 } from './types';
-import {Book} from '../../../../types/Book';
 import {BookEntry} from '../../../../types/BookEntry';
 import {AppAction} from '../../../../types/AppAction';
-import {AppState} from '../../../../types/AppState';
-import {getBooks} from '../BookList/action';
 
 export const saveBook = (): AddBookActionType => ({
   type: ADD_BOOK,
 });
 
-export const saveBookSuccess = (book: Book): AddBookActionType => ({
+export const saveBookSuccess = (): AddBookActionType => ({
   type: ADD_BOOK_SUCCESS,
-  payload: book,
 });
 
 export const saveBookFailed = (message: string): AddBookActionType => ({
@@ -50,6 +46,7 @@ export const startAddBook = ({name, author, price}: BookEntry) => {
         .update({
           [createdObjRef.id]: 0,
         });
+      dispatch(saveBookSuccess());
     } catch (err) {
       return dispatch(saveBookFailed('xảy ra lỗi khi lưu sạch'));
     }

@@ -6,6 +6,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {BookList} from '../screens/BookList';
 import {BookDetails} from '../screens/BookDetails';
 import {AddBook} from '../screens/AddBook';
+import {Login} from '../screens/Login';
 
 export type RootStackParamList = {
   Login: undefined;
@@ -20,10 +21,11 @@ export const Routes = () => (
   <NavigationContainer>
     <Stack.Navigator
       screenOptions={{headerShown: false}}
-      initialRouteName="BookList">
+      initialRouteName="Login">
       <Stack.Screen name="BookList" component={BookList} />
       <Stack.Screen name="BookDetails" component={BookDetails} />
       <Stack.Screen name="AddBook" component={AddBook} />
+      <Stack.Screen name="Login" component={Login} />
     </Stack.Navigator>
   </NavigationContainer>
 );

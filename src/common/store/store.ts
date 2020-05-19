@@ -8,11 +8,13 @@ import {composeWithDevTools} from 'redux-devtools-extension/developmentOnly';
 import {bookListReducer} from '../../apps/Book/BookList';
 import {bookDetailsReducer} from '../../apps/Book/BookDetails';
 import {addBookReducer} from '../../apps/Book/AddBook';
+import {authReducer} from '../../apps/User/Login';
 
 export const rootReducer = combineReducers({
   bookList: bookListReducer,
   bookDetails: bookDetailsReducer,
   addBook: addBookReducer,
+  auth: authReducer,
 });
 
 const persistConfig = {

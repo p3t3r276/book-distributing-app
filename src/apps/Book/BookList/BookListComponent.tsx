@@ -6,36 +6,11 @@ import {
 } from 'react-native';
 import {ListItem} from 'react-native-elements';
 import {useNavigation} from '@react-navigation/native';
-import {Dispatch, bindActionCreators} from 'redux';
-import {
-  connect,
-  ConnectedProps,
-  Connect,
-  useSelector,
-  useDispatch,
-} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 
 import {Book} from '../../../../types/Book';
 import {AppState} from '../../../../types/AppState';
 import {startGetBooks} from './action';
-import {AppAction} from '../../../../types/AppAction';
-
-const mapStateToProps = (state: AppState) => ({
-  bookListProp: state.bookList.books,
-  loading: state.bookList.loading,
-});
-
-const mapDispatchToProps = (dispatch: Dispatch<AppAction>) =>
-  bindActionCreators(
-    {
-      startGetBooks,
-    },
-    dispatch,
-  );
-
-const connector = connect(mapStateToProps, mapDispatchToProps);
-
-type PropsRedux = ConnectedProps<typeof connector>;
 
 export const BookListComponent = () => {
   const bookListProp = useSelector((state: AppState) => state.bookList.books);

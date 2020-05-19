@@ -61,7 +61,7 @@ export const startGetBooks = () => {
 
       return dispath(getBookSuccess(bookList));
     } catch (err) {
-      console.log(err);
+      console.log('Get Book Error: ', err);
       return dispath(getBooksError('Error when loading books'));
     }
   };

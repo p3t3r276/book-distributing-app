@@ -2,23 +2,29 @@ import React, {useEffect} from 'react';
 import {View, Text, ActivityIndicator} from 'react-native';
 import {Button} from 'react-native-elements';
 import {Formik, Field} from 'formik';
-import {useDispatch, useSelector} from 'react-redux';
+import {connect} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
 
 import {AppState} from '../../../../types/AppState';
 import {InputField} from '../../../common/InputField';
 import {startLogin, beforeLogin} from './actions';
+import {User} from './types';
+import {ThunkDispatch} from 'redux-thunk';
+import {AppAction} from 'types/AppAction';
+import {bindActionCreators} from 'redux';
 
-export const LoginComponent = () => {
-  const dispatch = useDispatch();
+type LoginComponentProps = LinkedStateProps & LinkedDispatchProps;
+
+export const LoginComponent = ({
+  startLogin,
+  beforeLogin,
+  currentUser,
+  loading,
+  errorMessage,
+}: LoginComponentProps) => {
   const navigation = useNavigation();
-
-  const {loading, errorMessage, isAuthenticated} = useSelector(
-    (state: AppState) => state.auth,
-  );
-
   useEffect(() => {
-    dispatch(beforeLogin());
+    beforeLogin();
   }, []);
 
   return (
@@ -31,13 +37,16 @@ export const LoginComponent = () => {
       }}
       onSubmit={({email, password}, {setSubmitting}) => {
         setSubmitting(true);
-
         // Do stuff
-        dispatch(startLogin(email, password));
+        try {
+          startLogin(email, password);
+          setSubmitting(false);
 
-        setSubmitting(false);
-
-        console.log(isAuthenticated);
+          // chuyển screen sau khi login
+          navigation.navigate('BookList');
+        } catch (err) {
+          console.log('Login error: ', err);
+        }
       }}>
       {({values, handleChange, handleSubmit, isSubmitting}) => (
         <View>
@@ -72,3 +81,31 @@ export const LoginComponent = () => {
     </Formik>
   );
 };
+
+interface LinkedStateProps {
+  currentUser: User | undefined;
+  loading: boolean;
+  errorMessage: string | undefined;
+}
+
+interface LinkedDispatchProps {
+  startLogin: (email: string, password: string) => void;
+  beforeLogin: () => void;
+}
+
+const mapStateToProps = (state: AppState, {}): LinkedStateProps => ({
+  ...state.auth,
+});
+
+const mapDispatchToProps = (
+  dispatch: ThunkDispatch<any, any, AppAction>,
+  {},
+): LinkedDispatchProps => ({
+  startLogin: bindActionCreators(startLogin, dispatch),
+  beforeLogin: bindActionCreators(beforeLogin, dispatch),
+});
+
+export const LoginComp = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(LoginComponent);

@@ -1,21 +1,29 @@
 import {Dispatch} from 'react';
+import auth from '@react-native-firebase/auth';
+import fireStore from '@react-native-firebase/firestore';
 
 import {
   LoginActionType,
   LOGIN,
-  LOGIN_SUCCES,
+  LOGIN_SUCCESS,
   LOGIN_FAIL,
   LOGIN_RESET,
+  USER_FETCH,
+  USER_FETCH_SUCCESS,
+  User,
+  USER_FETCH_FAIL,
 } from './types';
 import {AppAction} from '../../../../types/AppAction';
 import {AppState} from '../../../../types/AppState';
+import {ThunkAction, ThunkDispatch} from 'redux-thunk';
+import {AnyAction} from 'redux';
 
 const login = (): LoginActionType => ({
   type: LOGIN,
 });
 
 const loginSuccess = (): LoginActionType => ({
-  type: LOGIN_SUCCES,
+  type: LOGIN_SUCCESS,
 });
 
 const loginFail = (message: string): LoginActionType => ({
@@ -23,25 +31,67 @@ const loginFail = (message: string): LoginActionType => ({
   payload: message,
 });
 
-export const startLogin = (email: string, password: string) => {
-  return async (dispatch: Dispatch<AppAction>, getState: () => AppState) => {
+const fetchUser = (): LoginActionType => ({
+  type: USER_FETCH,
+});
+
+const fetchUserSuccess = (user: User): LoginActionType => ({
+  type: USER_FETCH_SUCCESS,
+  payload: user,
+});
+
+const fetchUserFail = (message: string): LoginActionType => ({
+  type: USER_FETCH_FAIL,
+  payload: message,
+});
+
+export const startLogin = (
+  email: string,
+  password: string,
+): ThunkAction<Promise<void>, {}, {}, AnyAction> => {
+  return async (dispatch: ThunkDispatch<{}, {}, AnyAction>): Promise<void> => {
     dispatch(login());
 
     try {
       // sign in
-      const user = await getState().auth.authRef.signInWithEmailAndPassword(
+      const userCredential = await auth().signInWithEmailAndPassword(
         email,
         password,
       );
 
-      if (user) {
-        return dispatch(loginSuccess());
+      if (userCredential) {
+        dispatch(loginSuccess());
+
+        dispatch(fetchUser());
+
+        try {
+          let user = auth().currentUser;
+          if (user) {
+            const doc = await fireStore().doc(`users/${user.uid}`).get();
+            const currentUser: User = {
+              ...doc.data(),
+              id: user.uid,
+              email: user.email,
+            };
+            dispatch(fetchUserSuccess(currentUser));
+            console.log('supposed end of fectching');
+            return;
+          }
+          dispatch(fetchUserFail('Không tải được thông tin người dùng'));
+        } catch (err) {
+          console.log('Fetch user error: ', err);
+          dispatch(
+            fetchUserFail(
+              'Không thể tải dữ liệu người dùng. Vui lòng thử lại trong ít phút nữa',
+            ),
+          );
+        }
       } else {
-        return dispatch(loginFail('Email hoặc mật khẩu không chính xác'));
+        dispatch(loginFail('Email hoặc mật khẩu không chính xác'));
       }
     } catch (err) {
       console.log('Auth eror: ', err);
-      return dispatch(loginFail('xảy ra lỗi trong quá trình đăng nhập'));
+      dispatch(loginFail('xảy ra lỗi trong quá trình đăng nhập'));
     }
   };
 };
@@ -49,5 +99,39 @@ export const startLogin = (email: string, password: string) => {
 export const beforeLogin = () => {
   return async (dispatch: Dispatch<AppAction>) => {
     dispatch({type: LOGIN_RESET});
+  };
+};
+
+export const startFetchUser = (): ThunkAction<
+  Promise<void>,
+  {},
+  {},
+  AnyAction
+> => {
+  return async (dispatch: ThunkDispatch<{}, {}, AnyAction>): Promise<void> => {
+    dispatch(fetchUser());
+
+    try {
+      auth().onAuthStateChanged(async (user) => {
+        if (user) {
+          const doc = await fireStore().doc(`users/${user.uid}`).get();
+          const currentUser: User = {
+            ...doc.data(),
+            id: user.uid,
+            email: user.email,
+          };
+          dispatch(fetchUserSuccess(currentUser));
+          return;
+        }
+        dispatch(fetchUserFail('Không tải được thông tin người dùng'));
+      });
+    } catch (err) {
+      console.log('Fetch user error: ', err);
+      dispatch(
+        fetchUserFail(
+          'Không thể tải dữ liệu người dùng. Vui lòng thử lại trong ít phút nữa',
+        ),
+      );
+    }
   };
 };

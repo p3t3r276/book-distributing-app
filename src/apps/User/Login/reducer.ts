@@ -1,19 +1,19 @@
-import auth from '@react-native-firebase/auth';
-
 import {
   LoginActionType,
   LoginStateType,
   LOGIN,
-  LOGIN_SUCCES as LOGIN_SUCCESS,
+  LOGIN_SUCCESS,
   LOGIN_FAIL,
   LOGIN_RESET,
+  USER_FETCH,
+  USER_FETCH_SUCCESS,
+  USER_FETCH_FAIL,
 } from './types';
 
 const loginInitialState: LoginStateType = {
-  authRef: auth,
   loading: false,
-  errorMessage: '',
-  isAuthenticated: false,
+  errorMessage: undefined,
+  currentUser: undefined,
 };
 
 export const authReducer = (
@@ -24,11 +24,18 @@ export const authReducer = (
     case LOGIN:
       return {...state, loading: true};
     case LOGIN_SUCCESS:
-      return {...state, loading: false, isAuthenticated: true};
+      return {...state, loading: false};
     case LOGIN_FAIL:
       return {...state, loading: false, errorMessage: action.payload};
     case LOGIN_RESET:
       return loginInitialState;
+    case USER_FETCH:
+      return {...state, loading: true};
+    case USER_FETCH_SUCCESS:
+      console.log('fetch user success', action.payload);
+      return {...state, loading: false, currentUser: action.payload};
+    case USER_FETCH_FAIL:
+      return {...state, loading: false, errorMessage: action.payload};
     default:
       return state;
   }

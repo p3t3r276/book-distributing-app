@@ -14,7 +14,6 @@ import {
   USER_FETCH_FAIL,
 } from './types';
 import {AppAction} from '../../../../types/AppAction';
-import {AppState} from '../../../../types/AppState';
 import {ThunkAction, ThunkDispatch} from 'redux-thunk';
 import {AnyAction} from 'redux';
 
@@ -62,30 +61,7 @@ export const startLogin = (
       if (userCredential) {
         dispatch(loginSuccess());
 
-        dispatch(fetchUser());
-
-        try {
-          let user = auth().currentUser;
-          if (user) {
-            const doc = await fireStore().doc(`users/${user.uid}`).get();
-            const currentUser: User = {
-              ...doc.data(),
-              id: user.uid,
-              email: user.email,
-            };
-            dispatch(fetchUserSuccess(currentUser));
-            console.log('supposed end of fectching');
-            return;
-          }
-          dispatch(fetchUserFail('Không tải được thông tin người dùng'));
-        } catch (err) {
-          console.log('Fetch user error: ', err);
-          dispatch(
-            fetchUserFail(
-              'Không thể tải dữ liệu người dùng. Vui lòng thử lại trong ít phút nữa',
-            ),
-          );
-        }
+        dispatch(startFetchUser());
       } else {
         dispatch(loginFail('Email hoặc mật khẩu không chính xác'));
       }

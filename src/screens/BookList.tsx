@@ -1,6 +1,6 @@
 import React from 'react';
-import {View, TouchableOpacity} from 'react-native';
-import {Text} from 'react-native-elements';
+import {View} from 'react-native';
+import {Text, Button} from 'react-native-elements';
 import {useNavigation} from '@react-navigation/native';
 import styled from 'styled-components';
 
@@ -15,9 +15,11 @@ export const BookList = () => {
         <Title h3>Đầu Sách</Title>
       </TitleWrapper>
       <Main>
-        <TouchableOpacity onPress={() => navigation.navigate('AddBook')}>
-          <Text>Add Book</Text>
-        </TouchableOpacity>
+        <Button
+          title="Thêm sách"
+          onPress={() => navigation.navigate('AddBook')}
+          style={{marginBottom: '20px'}}
+        />
         <BookListComponent />
       </Main>
     </AppLayout>

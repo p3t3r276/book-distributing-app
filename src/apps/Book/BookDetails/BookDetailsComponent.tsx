@@ -31,9 +31,11 @@ export const BookDetailsComponent = ({id}: Props) => {
 
   return (
     <View>
-      <Text>{book.name}</Text>
+      <Text>Tên: {book.name}</Text>
       <Text>Số lượng: {book.quantity}</Text>
-      <Text>{book.author}</Text>
+      <Text>Tác giả: {book.author}</Text>
+      <Text>Số lượng: {book.quantity}</Text>
+      <Text>Giá :{book.price}</Text>
     </View>
   );
 };

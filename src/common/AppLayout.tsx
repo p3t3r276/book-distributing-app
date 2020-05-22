@@ -7,7 +7,7 @@ import {LogoutComponent} from '../apps/User/Logout';
 const AppLayoutWrapper = styled(View)`
   flex: 1;
   align-items: center;
-  justify-content: center;
+  width: 100%;
 `;
 
 export const AppLayout: React.FC<{}> = ({children}) => (

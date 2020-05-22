@@ -12,7 +12,14 @@ import {Login} from '../screens/Login';
 import {AppState} from '../../types/AppState';
 import {User} from '../apps/User/Login/types';
 
-const Stack = createStackNavigator();
+export type RootStackParamList = {
+  Login: undefined;
+  BookList: undefined;
+  BookDetails: {id: string};
+  AddBook: undefined;
+};
+
+const Stack = createStackNavigator<RootStackParamList>();
 
 const RoutesComp = ({currentUser}: LinkedStateProps) => {
   const [isAuthenticated, setAuthenticated] = useState<boolean>(false);

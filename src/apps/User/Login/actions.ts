@@ -60,8 +60,7 @@ export const startLogin = (
 
       if (userCredential) {
         dispatch(loginSuccess());
-
-        dispatch(startFetchUser());
+        return;
       } else {
         dispatch(loginFail('Email hoặc mật khẩu không chính xác'));
       }
@@ -91,6 +90,7 @@ export const startFetchUser = (): ThunkAction<
       auth().onAuthStateChanged(async (user) => {
         if (user) {
           const doc = await fireStore().doc(`users/${user.uid}`).get();
+          console.log('done fetching');
           const currentUser: User = {
             ...doc.data(),
             id: user.uid,

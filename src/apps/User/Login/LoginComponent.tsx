@@ -7,7 +7,7 @@ import {useNavigation} from '@react-navigation/native';
 
 import {AppState} from '../../../../types/AppState';
 import {InputField} from '../../../common/InputField';
-import {startLogin, beforeLogin} from './actions';
+import {startLogin, beforeLogin, startFetchUser} from './actions';
 import {User} from './types';
 import {ThunkDispatch} from 'redux-thunk';
 import {AppAction} from 'types/AppAction';
@@ -19,14 +19,11 @@ export const LoginComponent = ({
   startLogin,
   beforeLogin,
   currentUser,
+  startFetchUser,
   loading,
   errorMessage,
 }: LoginComponentProps) => {
   const navigation = useNavigation();
-  useEffect(() => {
-    beforeLogin();
-  }, []);
-
   return (
     <Formik
       validateOnBlur={false}
@@ -41,6 +38,9 @@ export const LoginComponent = ({
         try {
           startLogin(email, password);
           setSubmitting(false);
+
+          startFetchUser();
+          console.log('supposed done');
 
           // chuyển screen sau khi login
           navigation.navigate('BookList');
@@ -91,6 +91,7 @@ interface LinkedStateProps {
 interface LinkedDispatchProps {
   startLogin: (email: string, password: string) => void;
   beforeLogin: () => void;
+  startFetchUser: () => void;
 }
 
 const mapStateToProps = (state: AppState, {}): LinkedStateProps => ({
@@ -103,6 +104,7 @@ const mapDispatchToProps = (
 ): LinkedDispatchProps => ({
   startLogin: bindActionCreators(startLogin, dispatch),
   beforeLogin: bindActionCreators(beforeLogin, dispatch),
+  startFetchUser: bindActionCreators(startFetchUser, dispatch),
 });
 
 export const LoginComp = connect(

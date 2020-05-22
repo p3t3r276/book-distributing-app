@@ -32,7 +32,7 @@ export const authReducer = (
     case USER_FETCH:
       return {...state, loading: true};
     case USER_FETCH_SUCCESS:
-      console.log('fetch user success', action.payload);
+      console.log('update user');
       return {...state, loading: false, currentUser: action.payload};
     case USER_FETCH_FAIL:
       return {...state, loading: false, errorMessage: action.payload};

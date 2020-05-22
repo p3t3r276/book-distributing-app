@@ -24,6 +24,9 @@ export const LoginComponent = ({
   errorMessage,
 }: LoginComponentProps) => {
   const navigation = useNavigation();
+
+  useEffect(() => beforeLogin, []);
+
   return (
     <Formik
       validateOnBlur={false}
